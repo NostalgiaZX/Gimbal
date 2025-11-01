@@ -8,9 +8,10 @@ uint32_t send=0;
 uint32_t receive=0;
 osMessageQueueId_t MessageQueue1;
 osMessageQueueAttr_t MessageQueue_attributes = {.name = "test_queue"};
-/*
+
 osSemaphoreAttr_t Semaphore_attributes = {.name = "test_sem"};
 osSemaphoreId_t Semaphorehandle;
+/*
 constexpr auto flag=1u<<0;
 constexpr auto flag=1u<<1;
 osEventFlagsAttr_t eventFlags={.name="eventtest"};
@@ -29,8 +30,11 @@ constexpr osThreadAttr_t UserTask1_attributes = {
         const auto tick = osKernelGetTickCount();
         count++;
         send++;
-        osMessageQueuePut(MessageQueue1,&send,0,0);
-        //osSemaphoreRelease(Semaphorehandle);
+        //osMessageQueuePut(MessageQueue1,&send,0,0);
+        if (send%10==0)
+        {
+            osSemaphoreRelease(Semaphorehandle);
+        }
         osDelayUntil(tick+10); // Delay for 1000 ms
     }
 }
@@ -45,13 +49,14 @@ constexpr osThreadAttr_t UserTask2_attributes = {
 [[noreturn]] void test_task2(void *argument) {
     while (1)
     {
-        osMessageQueueGet(MessageQueue1,&receive,nullptr,osWaitForever);
-        //osSemaphoreAcquire(Semaphorehandle,osWaitForever);
+        //osMessageQueueGet(MessageQueue1,&receive,nullptr,osWaitForever);
+        osSemaphoreAcquire(Semaphorehandle,osWaitForever);
+        receive++;
     }
 }
 void user_task_init() {
     UserTask1Handle = osThreadNew(test_task1, nullptr, &UserTask1_attributes);
     UserTask2Handle = osThreadNew(test_task2, nullptr, &UserTask2_attributes);
-    MessageQueue1 = osMessageQueueNew(16, sizeof(uint32_t), &MessageQueue_attributes);
-    //Semaphorehandle = osSemaphoreNew(1, 0, &Semaphore_attributes);
+    //MessageQueue1 = osMessageQueueNew(16, sizeof(uint32_t), &MessageQueue_attributes);
+    Semaphorehandle = osSemaphoreNew(1, 0, &Semaphore_attributes);
 }

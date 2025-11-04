@@ -1,6 +1,3 @@
-//
-// Created by MSI on 2025/10/12.
-//
 
 #ifndef SPITEST_BMI088_H
 #define SPITEST_BMI088_H
@@ -29,4 +26,4 @@ void bmi088_gyro_write_single_reg(uint8_t reg, uint8_t tx_data); // gyro写入
 #endif
 
 
-#endif // SPITEST_BMI088_H
+#endif

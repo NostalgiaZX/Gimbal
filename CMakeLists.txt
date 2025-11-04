@@ -34,7 +34,11 @@ enable_language(C ASM)
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME}
         Usercode/Src/Usertask.cpp
-        Usercode/Inc/Usertask.h)
+        Usercode/Inc/Usertask.h
+        Core/Src/bmi088.c
+        Core/Src/callback.cpp
+        Core/Src/imu.cpp
+        Core/Src/Remcon.cpp)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)

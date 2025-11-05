@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -190,7 +190,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -330,7 +330,7 @@
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>5</v6Lang>
-            <v6LangP>6</v6LangP>
+            <v6LangP>8</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -398,6 +398,26 @@
               <FileName>Usertask.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\Usercode\Src\Usertask.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>callback.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\Src\callback.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>imu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\Src\imu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>bmi088.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\bmi088.c</FilePath>
+            </File>
+            <File>
+              <FileName>Remcon.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\Src\Remcon.cpp</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>

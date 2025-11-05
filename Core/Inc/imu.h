@@ -1,6 +1,3 @@
-//
-// Created by MSI on 2025/10/12.
-//
 
 #ifndef SPITEST_IMU_H
 #define SPITEST_IMU_H
@@ -37,6 +34,5 @@ private:
     void init();
 
 };
-
 
 #endif // SPITEST_IMU_H

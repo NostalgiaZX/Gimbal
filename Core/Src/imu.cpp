@@ -4,6 +4,8 @@
 #define g 9.81f
 #define M_PI 3.1415
 #include "../Inc/imu.h"
+
+imu bmi088_imu;
 void imu::acc_calculate(){
   bmi088_accel_read_reg(0x41, &accrange_raw, 1);
   accrange=(float)(accrange_raw+1)*3.f*g;

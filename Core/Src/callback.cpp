@@ -5,7 +5,9 @@
 #include "spi.h"
 #include "tim.h"
 #include "iwdg.h"
+#include "Usertask.h"
 extern imu bmi088_imu;
+extern osSemaphoreId_t imudatarhandle;;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     /* USER CODE BEGIN Callback 0 */
@@ -24,7 +26,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
         bmi088_imu.acc_calculate();
         bmi088_imu.gyro_calculate();
-        bmi088_imu.filter(0.4f);
+        osSemaphoreRelease(imudatarhandle);
     }
     /* USER CODE END Callback 1 */
 }

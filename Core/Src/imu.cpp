@@ -1,6 +1,4 @@
-//
-// Created by MSI on 2025/10/12.
-//
+
 #define g 9.81f
 #define M_PI 3.1415
 #include "../Inc/imu.h"

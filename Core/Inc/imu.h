@@ -35,4 +35,4 @@ private:
 
 };
 
-#endif // SPITEST_IMU_H
+#endif

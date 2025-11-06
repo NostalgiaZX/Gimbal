@@ -11,7 +11,8 @@
 uint8_t rxbuffer[8]={0};
 extern rem rem1;
 extern imu bmi088_imu;
-extern osSemaphoreId_t imudatarhandle;;
+extern osSemaphoreId_t imudatarhandle;
+extern osSemaphoreId_t remconrhandle;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     /* USER CODE BEGIN Callback 0 */
@@ -45,6 +46,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
                 rem1.len=rem1.len==18?0:rem1.len;
 
             }
+
+            osSemaphoreRelease(remconrhandle);
             HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rxbuffer,1);
         }
     }

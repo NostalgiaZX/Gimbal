@@ -3,7 +3,7 @@
 
 #include "imu.h"
 #include "Remcon.h"
-
+extern rem rem1;
 extern imu bmi088_imu;
 osMessageQueueId_t imu_msgque;
 osMessageQueueAttr_t imu_msgque_attributes = {.name = "imu_msgque"};
@@ -11,6 +11,8 @@ osMessageQueueId_t remcon_msgque;
 osMessageQueueAttr_t remcon_msgque_attributes = {.name = "remcon_msgque"};
 osSemaphoreAttr_t imudatar_attributes = {.name = "imudatar"};
 osSemaphoreId_t imudatarhandle;
+osSemaphoreAttr_t remconr_attributes = {.name = "remconr"};
+osSemaphoreId_t remconrhandle;
 constexpr auto remcondata=1u<<0;
 constexpr auto imudata=1u<<1;
 osEventFlagsAttr_t eventFlags={.name="gimbal_flag"};
@@ -25,8 +27,7 @@ constexpr osThreadAttr_t imu_datacal_attributes = {
 [[noreturn]] void imu_datacal(void *argument) {
     while (1) {
         osSemaphoreAcquire(imudatarhandle,osWaitForever);
-        //卡尔曼滤波
-
+        //mahony算法（目前是线性滤波）
         bmi088_imu.filter(0.4f);
 
         osEventFlagsSet(eventFlagId, imudata);
@@ -41,6 +42,9 @@ constexpr osThreadAttr_t remcon_attributes = {
 
 [[noreturn]] void remcon(void *argument) {
     while (1) {
+        osSemaphoreAcquire(remconrhandle,osWaitForever);
+        rem1.Handle();
+
         osEventFlagsSet(eventFlagId, remcondata);
         osDelay(7000); // Delay for 1000 ms
     }

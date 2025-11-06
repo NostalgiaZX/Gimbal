@@ -22,7 +22,7 @@ private:
   float rollgyro=0, pitchgyro=0,yawgyro=0;
   float roll=0, pitch=0, yaw=0;
   public:
-    imu(const float yawori =0):yaw(yawori),yawgyro(yawori)
+    imu(const float yawori =0,const float deltatime=0.001):yaw(yawori),yawgyro(yawori),dt(deltatime)
     {
         this->init();
     }

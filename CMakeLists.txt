@@ -38,7 +38,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Core/Src/bmi088.c
         Core/Src/callback.cpp
         Core/Src/imu.cpp
-        Core/Src/Remcon.cpp)
+        Core/Src/Remcon.cpp
+)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)

@@ -39,6 +39,5 @@ public:
 
 };
 
-void dmareceive();
 
 #endif // SPITEST_REMCON_H

@@ -30,6 +30,7 @@ void imu::acc_read()
   rollacc=std::atan(acc_y/acc_z)* (180 / M_PI);
     pitchacc=std::atan(-acc_x/std::sqrt(acc_y*acc_y+acc_z*acc_z))* (180 / M_PI);
 }
+// 计算陀螺仪角度??
 void imu::gyro_read()
 {
     rollgyro+=gyro_x*dt;

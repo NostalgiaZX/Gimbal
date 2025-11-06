@@ -51,7 +51,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+extern uint8_t rxbuffer[8];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -104,6 +104,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
     HAL_TIM_Base_Start_IT(&htim5);
     HAL_TIM_Base_Start_IT(&htim7);
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rxbuffer,1);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -184,6 +185,7 @@ void SystemClock_Config(void)
   * @param  htim : TIM handle
   * @retval None
   */
+
 
 /**
   * @brief  This function is executed in case of error occurrence.

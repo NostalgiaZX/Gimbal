@@ -59,6 +59,3 @@ void rem::Handle() {
 }
 rem rem1;
 
-void dmareceive() {
-  HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rem1.rxbuffer,8);
-}

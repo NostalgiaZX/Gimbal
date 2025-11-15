@@ -10,6 +10,7 @@
 #define MID_VALUE    0x0400  // 中位值
 #define MIN_VALUE    0x016C  // 最小值
 #define MAX_VALUE    0x0694  // 最大值
+
 float trans(uint16_t input);
 class data {
   public:
@@ -21,13 +22,14 @@ class data {
   float chan2;
   float chan3;
   float chan4;
-
   uint8_t s1;
         uint8_t s2;
   void init();
 };
 class rem {
 public:
+    float pitch;
+    float yaw;
   uint16_t len;
   uint32_t tick;
   uint8_t rxbuffer[8]={0};

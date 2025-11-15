@@ -13,7 +13,8 @@
 #include "can.h"
 #include "motor.h"
 //can read and send
-extern Motor motor1;
+extern Motor yawmotor;
+extern Motor pitchmotor;
 uint32_t ptr;
 extern uint8_t rxdata[8];
 extern uint8_t txdata[8];
@@ -77,15 +78,22 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         }
     }
 }
-
+uint32_t id;
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     if (hcan->Instance==CAN1)
     {
         HAL_CAN_GetRxMessage(&hcan1,CAN_RX_FIFO0,&rxheader,rxdata);
-        if (rxheader.StdId==0x201)
+        id=rxheader.StdId;
+        //0x205 is pitch
+        if (rxheader.StdId==0x205)
         {
-            motor1.canrxmsgcallback(rxdata);
+            pitchmotor.canrxmsgcallback(rxdata);
+        }
+        //0x207 is yaw
+        else if (rxheader.StdId==0x207)
+        {
+            yawmotor.canrxmsgcallback(rxdata);
         }
     }
 }

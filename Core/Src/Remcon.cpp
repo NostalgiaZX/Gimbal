@@ -1,6 +1,9 @@
 
 
 #include "../Inc/Remcon.h"
+
+#include "cmsis_os2.h"
+extern uint8_t stop_flag;
 float trans(uint16_t input) {
   float result;
 
@@ -54,8 +57,19 @@ void rem::Handle() {
         data1.chan2=trans(data1.ch2);
   data1.chan3=trans(data1.ch3);
         data1.chan4=trans(data1.ch4);
+    pitch=data1.chan2;
+    yaw=data1.chan1;
   data1.s1=((rxdata[5]>>4)&0x0C)>>2;
   data1.s2=(rxdata[5]>>4)&0x03;
+    if (data1.s2==1)
+    {
+        stop_flag=0;
+
+    }
+    else if (data1.s2==2)
+    {
+        stop_flag=1;
+    }
 }
 rem rem1;
 

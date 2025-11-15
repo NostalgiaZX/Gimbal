@@ -3,8 +3,11 @@
 
 #include "imu.h"
 #include "Remcon.h"
+
+uint8_t stop_flag;
 extern rem rem1;
 extern imu bmi088_imu;
+uint32_t count;
 osMessageQueueId_t imu_msgque;
 osMessageQueueAttr_t imu_msgque_attributes = {.name = "imu_msgque"};
 osMessageQueueId_t remcon_msgque;

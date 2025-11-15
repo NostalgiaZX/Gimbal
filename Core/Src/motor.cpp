@@ -1,6 +1,6 @@
 
 #include "motor.h"
-float ratio = 19.2;
+float ratio = 1;
 float Motor::getAngle() {
     return angle;
 }
@@ -76,4 +76,5 @@ void Motor::Handle() {
     }
     output_intensity_ = intensity;
 }
-Motor motor1(ratio);
+Motor yawmotor(ratio);
+Motor pitchmotor(ratio);

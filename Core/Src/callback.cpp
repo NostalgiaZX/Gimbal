@@ -8,6 +8,29 @@
 #include "Usertask.h"
 #include "usart.h"
 #include "Remcon.h"
+#include <math.h>
+
+#include "can.h"
+#include "motor.h"
+//can read and send
+extern Motor motor1;
+uint32_t ptr;
+extern uint8_t rxdata[8];
+extern uint8_t txdata[8];
+extern CAN_TxHeaderTypeDef txheader;
+extern CAN_RxHeaderTypeDef rxheader;
+extern uint8_t stop_flag;
+float targetspeed=25;
+float targetangle=20;
+float forwardspeed=0;
+float forwardinten=0.7;
+float degree=90.0f;
+float degree2current(float degree) {
+    float T=0.5524*5*sin(degree/180.0f*3.14);
+    float I=T*2.4;
+    return I;
+}
+//remcon read buffer
 uint8_t rxbuffer[8]={0};
 extern rem rem1;
 extern imu bmi088_imu;
@@ -43,12 +66,26 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
                 rem1.rxbuffer[i]=rxbuffer[i];
                 rem1.rxdata[rem1.len+i]=rem1.rxbuffer[i];
                 rem1.len++;
-                rem1.len=rem1.len==18?0:rem1.len;
+                if (rem1.len==18) {
+                    rem1.len=0;
+                    osSemaphoreRelease(remconrhandle);
+                }
 
             }
 
-            osSemaphoreRelease(remconrhandle);
             HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rxbuffer,1);
+        }
+    }
+}
+
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+{
+    if (hcan->Instance==CAN1)
+    {
+        HAL_CAN_GetRxMessage(&hcan1,CAN_RX_FIFO0,&rxheader,rxdata);
+        if (rxheader.StdId==0x201)
+        {
+            motor1.canrxmsgcallback(rxdata);
         }
     }
 }

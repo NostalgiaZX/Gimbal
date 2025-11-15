@@ -44,9 +44,7 @@ constexpr osThreadAttr_t remcon_attributes = {
     while (1) {
         osSemaphoreAcquire(remconrhandle,osWaitForever);
         rem1.Handle();
-
         osEventFlagsSet(eventFlagId, remcondata);
-        osDelay(7000); // Delay for 1000 ms
     }
 }
 

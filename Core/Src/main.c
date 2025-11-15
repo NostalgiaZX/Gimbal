@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "can.h"
 #include "dma.h"
 #include "iwdg.h"
 #include "spi.h"
@@ -52,6 +53,26 @@
 
 /* USER CODE BEGIN PV */
 extern uint8_t rxbuffer[8];
+
+uint8_t stop_flag=1;
+CAN_TxHeaderTypeDef txheader = { .StdId = 0x200,
+                                 .ExtId = 0,
+                                 .RTR = CAN_RTR_DATA,
+                                 .IDE = CAN_ID_STD,
+                                 .DLC = 8,
+                                 .TransmitGlobalTime = DISABLE };
+CAN_RxHeaderTypeDef rxheader;
+uint8_t rxdata[8];
+uint8_t txdata[8] = { 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+CAN_FilterTypeDef filter = { .FilterIdHigh = 0x0000,
+                             .FilterIdLow = 0x0000,
+                             .FilterMaskIdHigh = 0x0000,
+                             .FilterMaskIdLow = 0x0000,
+                             .FilterActivation = ENABLE,
+                             .FilterBank = 0,
+                             .FilterFIFOAssignment = CAN_FILTER_FIFO0,
+                             .FilterMode = CAN_FILTERMODE_IDMASK,
+                             .FilterScale = CAN_FILTERSCALE_32BIT };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,10 +122,16 @@ int main(void)
   MX_USART3_UART_Init();
   MX_SPI1_Init();
   MX_TIM5_Init();
+  MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
+  
+  bmi088_init();
+    HAL_CAN_ConfigFilter(&hcan1, &filter);
+    HAL_CAN_Start(&hcan1);
+    HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rxbuffer,1);
     HAL_TIM_Base_Start_IT(&htim5);
     HAL_TIM_Base_Start_IT(&htim7);
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart3,rxbuffer,1);
   /* USER CODE END 2 */
 
   /* Init scheduler */

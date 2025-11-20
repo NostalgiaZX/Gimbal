@@ -54,7 +54,7 @@
 /* USER CODE BEGIN PV */
 extern uint8_t rxbuffer[8];
 
-CAN_TxHeaderTypeDef txheader = { .StdId = 0x200,
+CAN_TxHeaderTypeDef txheader = { .StdId = 0x1FE,
                                  .ExtId = 0,
                                  .RTR = CAN_RTR_DATA,
                                  .IDE = CAN_ID_STD,

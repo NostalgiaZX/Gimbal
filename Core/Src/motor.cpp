@@ -4,7 +4,7 @@ float ratio = 1;
 float Motor::getAngle() {
     return angle;
 }
-Motor::Motor(const float ratio_) : ratio(ratio_), spid_(2.f, 0.6f, 40.f, 15.0f, 35.0f,0.1f), ppid_(0.7f, 0.f, 56.f, 1.0f, 2.5f,0.06f) {
+Motor::Motor(const float ratio_,float skp,float ski,float skd,float skimax,float soutmax,float sdfilterk,float pkp,float pki,float pkd,float pkimax,float poutmax,float pdfilterk) : ratio(ratio_), spid_(skp,ski,skd,skimax,soutmax,sdfilterk), ppid_(pkp,pki,pkd,pkimax,poutmax,pdfilterk) {
     control_method_ = POSITION_SPEED;
     target_angle_ = 0.f;
     feedforward_speed_ = 0.f;
@@ -13,6 +13,12 @@ Motor::Motor(const float ratio_) : ratio(ratio_), spid_(2.f, 0.6f, 40.f, 15.0f, 
     output_intensity_ = 0.f;
     spid_.reset();
     ppid_.reset();
+}
+float pitchforwardinten(float angle)
+{
+    float intensity;
+    intensity=-0.3*sin(PI/40*(angle-80))-0.35;
+    return intensity;
 }
 float linermap(float in, float inmin, float inmax, float outmin, float outmax) {
     float out;
@@ -31,9 +37,10 @@ float trans360(float in) {
 void Motor::canrxmsgcallback(const uint8_t rdata[8]) {
     temp = rdata[6];
     auto I = static_cast<int16_t>((rdata[4] << 8) | rdata[5]);
-    current = linermap(I, -16384, 16384, -20, 20);
-    auto temp = static_cast<int16_t>((rdata[2] << 8) | rdata[3]);
-    rotate_speed = (float)temp / 19.2;
+    current = linermap(I, -16384, 16384, -3, 3);
+    auto temprary = static_cast<int16_t>((rdata[2] << 8) | rdata[3]);
+    rotate_speed = (float)temprary*6.0f;
+    //rotate_speed =(float)temp;
     last_ecd_angle = ecd_angle;
     ecd_angle = linermap((rdata[0] << 8) | rdata[1], 0, 8191, 0, 360);
     delta_ecd_angle = trans360(ecd_angle - last_ecd_angle);
@@ -76,5 +83,5 @@ void Motor::Handle() {
     }
     output_intensity_ = intensity;
 }
-Motor yawmotor(ratio);
-Motor pitchmotor(ratio);
+Motor yawmotor(ratio,40.0f,0.0f,100.0f,0,2000,0.1,0.005,0.0,0.f,0.4,3,0.1);
+Motor pitchmotor(ratio,40,2,50.0,20.0,200.0,0.1,0.006,0.0,0.f,1.0,0.5,0.1);

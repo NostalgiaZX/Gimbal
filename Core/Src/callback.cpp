@@ -26,11 +26,6 @@ float targetangle=20;
 float forwardspeed=0;
 float forwardinten=0.7;
 float degree=90.0f;
-float degree2current(float degree) {
-    float T=0.5524*5*sin(degree/180.0f*3.14);
-    float I=T*2.4;
-    return I;
-}
 //remcon read buffer
 uint8_t rxbuffer[8]={0};
 extern rem rem1;
@@ -78,20 +73,18 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         }
     }
 }
-uint32_t id;
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     if (hcan->Instance==CAN1)
     {
         HAL_CAN_GetRxMessage(&hcan1,CAN_RX_FIFO0,&rxheader,rxdata);
-        id=rxheader.StdId;
-        //0x205 is pitch
-        if (rxheader.StdId==0x205)
+        //0x208 is pitch
+        if (rxheader.StdId==0x208)
         {
             pitchmotor.canrxmsgcallback(rxdata);
         }
-        //0x207 is yaw
-        else if (rxheader.StdId==0x207)
+        //0x205 is yaw
+        else if (rxheader.StdId==0x205)
         {
             yawmotor.canrxmsgcallback(rxdata);
         }

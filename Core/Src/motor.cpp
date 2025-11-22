@@ -1,6 +1,8 @@
 
 #include "motor.h"
 float ratio = 1;
+extern float ksin;
+extern float constant;
 float Motor::getAngle() {
     return angle;
 }
@@ -14,10 +16,11 @@ Motor::Motor(const float ratio_,float skp,float ski,float skd,float skimax,float
     spid_.reset();
     ppid_.reset();
 }
+
 float pitchforwardinten(float angle)
 {
     float intensity;
-    intensity=-0.3*sin(PI/40*(angle-80))-0.35;
+    intensity=ksin*sin(PI/40*(angle-80))+constant;
     return intensity;
 }
 float linermap(float in, float inmin, float inmax, float outmin, float outmax) {
@@ -83,5 +86,5 @@ void Motor::Handle() {
     }
     output_intensity_ = intensity;
 }
-Motor yawmotor(ratio,40.0f,0.0f,100.0f,0,2000,0.1,0.005,0.0,0.f,0.4,3,0.1);
-Motor pitchmotor(ratio,40,2,50.0,20.0,200.0,0.1,0.006,0.0,0.f,1.0,0.5,0.1);
+Motor yawmotor(ratio,35.0f,20.0f,100.0f,100,2000,0.1,0.005,0.0,0.f,0.4,3,0.1);
+Motor pitchmotor(ratio,80.f,500.f,500,500.0,2000.0,0.1,0.0015,0.0,0.f,1.0,1,0.1);

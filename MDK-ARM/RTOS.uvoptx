@@ -178,22 +178,12 @@
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yawinten</ItemText>
+          <ItemText>yawangleset</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pitchinten</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>yawspeed</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>pitchspeed</ItemText>
+          <ItemText>pitchangleset</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

@@ -20,10 +20,14 @@ float pitchinten=-0.55;
 //forward speed
 float yawspeed=0.0;
 float pitchspeed=0.0;
+//forward inensity canshu
+float ksin=-0.25f;
+float constant=-0.4f;
 
 int16_t pitchcurrent;
 int16_t yawcurrent;
-
+float yawangleset=0;
+float pitchangleset=80;
 osMessageQueueId_t imu_msgque;
 osMessageQueueAttr_t imu_msgque_attributes = {.name = "imu_msgque"};
 osMessageQueueId_t remcon_msgque;
@@ -82,11 +86,10 @@ constexpr osThreadAttr_t gimbal_attributes = {
         float yawangle=linermap(rem1.yaw,-1.0f,1.0f,-180.0f,180.0f);
         float pitchangle=linermap(rem1.pitch,-1.0f,1.0f,66.0f,96.0f);
         yawmotor.SetPosition(yawangle,0,yawinten);
-        //pitchmotor.SetPosition(pitchangle,0,pitchforwardinten(pitchmotor.fdb_angle_));
+        pitchmotor.SetPosition(pitchangle,0,pitchforwardinten(pitchmotor.fdb_angle_));
         //yawmotor.SetSpeed(yawspeed,yawinten);
         //pitchmotor.SetSpeed(pitchspeed,pitchinten);
-        //yawmotor.SetIntensity(yawinten);
-        pitchmotor.SetIntensity(pitchforwardinten(pitchmotor.fdb_angle_));
+        //pitchmotor.SetIntensity(-0.5);
         yawmotor.Handle();
         pitchmotor.Handle();
         yawcurrent=(int16_t)linermap(yawmotor.output_intensity_,-3.0f,3.0f,-16384.0f,16384.0f);

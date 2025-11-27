@@ -50,7 +50,6 @@ constexpr osThreadAttr_t imu_datacal_attributes = {
 [[noreturn]] void imu_datacal(void *argument) {
     while (1) {
         osSemaphoreAcquire(imudatarhandle,osWaitForever);
-        //mahony算法（目前是线性滤波）
         bmi088_imu.filter(0.4f);
 
         osEventFlagsSet(eventFlagId, imudata);

@@ -46,6 +46,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
         HAL_IWDG_Refresh(&hiwdg);
     }
+    //imu data update
     else if (htim->Instance == TIM5)
     {
         bmi088_imu.acc_calculate();

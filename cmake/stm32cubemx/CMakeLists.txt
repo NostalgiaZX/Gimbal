@@ -94,7 +94,11 @@ set(MX_LINK_LIBS
 add_library(stm32cubemx INTERFACE
         ../../Core/Inc/motor.h
         ../../Core/Src/motor.cpp
-        ../../Core/Src/pid.cpp)
+        ../../Core/Src/pid.cpp
+        ../../Core/Inc/mahony.h
+        ../../Core/Inc/matrix.h
+        ../../Core/Src/mahony.cpp
+        ../../Core/Src/matrix.cpp)
 target_include_directories(stm32cubemx INTERFACE ${MX_Include_Dirs})
 target_compile_definitions(stm32cubemx INTERFACE ${MX_Defines_Syms})
 
@@ -102,7 +106,11 @@ target_compile_definitions(stm32cubemx INTERFACE ${MX_Defines_Syms})
 add_library(STM32_Drivers OBJECT
         ../../Core/Inc/motor.h
         ../../Core/Src/motor.cpp
-        ../../Core/Src/pid.cpp)
+        ../../Core/Src/pid.cpp
+        ../../Core/Inc/mahony.h
+        ../../Core/Inc/matrix.h
+        ../../Core/Src/mahony.cpp
+        ../../Core/Src/matrix.cpp)
 target_sources(STM32_Drivers PRIVATE ${STM32_Drivers_Src})
 target_link_libraries(STM32_Drivers PUBLIC stm32cubemx)
 
@@ -111,7 +119,11 @@ target_link_libraries(STM32_Drivers PUBLIC stm32cubemx)
 add_library(FreeRTOS OBJECT
         ../../Core/Inc/motor.h
         ../../Core/Src/motor.cpp
-        ../../Core/Src/pid.cpp)
+        ../../Core/Src/pid.cpp
+        ../../Core/Inc/mahony.h
+        ../../Core/Inc/matrix.h
+        ../../Core/Src/mahony.cpp
+        ../../Core/Src/matrix.cpp)
 target_sources(FreeRTOS PRIVATE ${FreeRTOS_Src})
 target_link_libraries(FreeRTOS PUBLIC stm32cubemx)
 

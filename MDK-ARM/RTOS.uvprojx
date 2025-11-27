@@ -795,6 +795,16 @@
               <FileType>8</FileType>
               <FilePath>..\Core\Src\pid.cpp</FilePath>
             </File>
+            <File>
+              <FileName>mahony.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\Src\mahony.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>matrix.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Core\Src\matrix.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

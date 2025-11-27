@@ -15,6 +15,7 @@ class EulerAngle {
     float roll;
     explicit EulerAngle(float y = 0, float p = 0, float r = 0)
       : yaw(y), pitch(p), roll(r) {}
+    void fromQuaternion(const float q[4]);
 };
 
 class imuRawData {
@@ -27,11 +28,11 @@ class imu {
 private:
   float dt=0.001;
     //加速度计数据,x,y,z
-    float as[3];
+    float as_[3];
   uint8_t accrange_raw=0;
   float accrange=0;
     //陀螺仪数据,x,y,z
-    float ws[3];
+    float ws_[3];
   uint8_t gyrorange_raw=0;
   float gyrorange=0;
   uint8_t accdata[6]={0};
@@ -41,9 +42,10 @@ private:
   float rollacc=0, pitchacc=0;
   float rollgyro=0, pitchgyro=0,yawgyro=0;
     EulerAngle EulerAngle_degrees;
+    EulerAngle Mahony_degrees;
     Mahony mahony;
   public:
-    imu(const float yawori =0,const float deltatime=0.001):EulerAngle_degrees(yawori,0,0),mahony(deltatime),yawgyro(yawori),dt(deltatime)
+    imu(const float yawori =0,const float deltatime=0.001):EulerAngle_degrees(yawori,0,0),Mahony_degrees(yawori,0,0),mahony(deltatime),yawgyro(yawori),dt(deltatime)
     {
         this->init();
     }
@@ -53,6 +55,7 @@ private:
   void gyro_calculate();
     void gyro_read();
     void filter(float k=0.4);
+    void mahony_update();
     void init();
 
 };

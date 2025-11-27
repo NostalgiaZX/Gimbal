@@ -51,7 +51,7 @@ constexpr osThreadAttr_t imu_datacal_attributes = {
     while (1) {
         osSemaphoreAcquire(imudatarhandle,osWaitForever);
         bmi088_imu.filter(0.4f);
-
+        bmi088_imu.mahony_update();
         osEventFlagsSet(eventFlagId, imudata);
     }
 }

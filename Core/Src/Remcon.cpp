@@ -61,6 +61,7 @@ void rem::Handle() {
     yaw=data1.chan1;
   data1.s1=((rxdata[5]>>4)&0x0C)>>2;
   data1.s2=(rxdata[5]>>4)&0x03;
+    /*
     if (data1.s2==1)
     {
         stop_flag=0;
@@ -69,7 +70,7 @@ void rem::Handle() {
     else if (data1.s2==2)
     {
         stop_flag=1;
-    }
+    }*/
 }
 rem rem1;
 

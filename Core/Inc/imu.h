@@ -26,9 +26,11 @@ class imuRawData {
 
 class imu {
 private:
+
   float dt=0.001;
     //加速度计数据,x,y,z
     float as_[3];
+
   uint8_t accrange_raw=0;
   float accrange=0;
     //陀螺仪数据,x,y,z
@@ -38,7 +40,7 @@ private:
   uint8_t accdata[6]={0};
   uint8_t gyrodata[6]={0};
     //四元数
-    float q_[4];
+    float q_[4]={1,0,0,0};
   float rollacc=0, pitchacc=0;
   float rollgyro=0, pitchgyro=0,yawgyro=0;
     EulerAngle EulerAngle_degrees;

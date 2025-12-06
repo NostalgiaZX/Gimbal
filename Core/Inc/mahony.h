@@ -7,7 +7,7 @@ class Mahony {
  public:
   // Initialize & config parameter(time step & fusion coefficient)
   // 初始化，配置参数（时间步长，数据融合系数）
-  Mahony(float dt, float kg=0.5f, float g_thres=2.f)
+  Mahony(float dt, float kg=2.f, float g_thres=0.5f)
       : dt_(dt),
         kg_(kg),
         g_thres_(g_thres){}

@@ -5,9 +5,12 @@
 #include <pid.h>
 #include <cmath>
 #define PI 3.14159f
+#define friction_max 0.3f
 float linermap(float in,float inmin,float inmax,float outmin,float outmax);
 float trans360(float in);
 float pitchforwardinten(float angle);
+void timesumadd(const float rotatespeed,float& timesum,const float dt);
+float adjust_fintensity(float timesum);
 typedef enum ControlMethod {
     TORQUE,
     SPEED,
@@ -26,7 +29,8 @@ private:
     float current=0.f;
     float temp=0.f;
 public:
-
+    float oneway_timesum;
+    float friction_intensity;
     PID spid_, ppid_;
     float target_angle_, fdb_angle_;
     float target_speed_, fdb_speed_, feedforward_speed_;
